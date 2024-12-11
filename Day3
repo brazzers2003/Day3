@@ -1,0 +1,95 @@
+package com.example.carserviceschedule.dto;  
+
+import javax.validation.constraints.*;  
+import java.time.LocalDate;  
+
+public class CarServiceDTO {  
+
+    @NotNull(message = "Brand is mandatory")  
+    @Size(min = 1, max = 50, message = "Brand must be between 1 and 50 characters")  
+    private String carBrand;  
+
+    @NotNull(message = "Service number per day is mandatory")  
+    @Min(value = 1, message = "Service number must be at least 1")  
+    @Max(value = 5, message = "Service number must be at most 5")  
+    private Integer serviceNumberPerDay;  
+
+    @NotNull(message = "Service date is mandatory")  
+    private LocalDate serviceDate;  
+
+    @Size(max = 50, message = "Service type must be at most 50 characters")  
+    private String serviceType;  
+
+    @Pattern(regexp = "^[A-Z]{1}[0-9]{3}[A-Z]{2}$", message = "License plate format is invalid")  
+    private String licensePlate;  
+
+    @NotNull(message = "Client last name is mandatory")  
+    @Size(max = 50, message = "Client last name must be at most 50 characters")  
+    private String clientLastName;  
+
+    // Getters and Setters  
+}
+import org.springframework.http.HttpStatus;  
+import org.springframework.http.ResponseEntity;  
+import org.springframework.web.bind.annotation.ControllerAdvice;  
+import org.springframework.web.bind.annotation.ExceptionHandler;  
+import org.springframework.web.bind.MethodArgumentNotValidException;  
+import org.springframework.web.bind.annotation.ResponseBody;  
+
+import java.util.HashMap;  
+import java.util.Map;  
+
+@ControllerAdvice  
+public class GlobalExceptionHandler {  
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)  
+    @ResponseBody  
+    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {  
+        Map<String, String> errors = new HashMap<>();  
+        ex.getBindingResult().getFieldErrors().forEach(error ->   
+            errors.put(error.getField(), error.getDefaultMessage()));  
+        return ResponseEntity.badRequest().body(errors);  
+    }  
+}
+
+public List<CarService> getWeeklySchedule() {  
+    // Логіка для отримання даних та групування по днях тижня  
+    List<CarService> allServices = repository.findAll();   
+    // Групування за датами і днями тижня тут  
+    // Процес групування може включати агрегування даних по датах  
+    return allServices; // Повернення агрегованих даних  
+}
+
+public List<CarService> getWeeklySchedule() {  
+    // Логіка для отримання даних та групування по днях тижня  
+    List<CarService> allServices = repository.findAll();   
+    // Групування за датами і днями тижня тут  
+    // Процес групування може включати агрегування даних по датах  
+    return allServices; // Повернення агрегованих даних  
+}
+
+@GetMapping("/schedule")  
+public ResponseEntity<List<CarService>> getWeeklySchedule() {  
+    List<CarService> schedule = service.getWeeklySchedule();  
+    return ResponseEntity.ok(schedule);  
+}
+
+@GetMapping("/schedule")  
+public ResponseEntity<List<CarService>> getWeeklySchedule() {  
+    List<CarService> schedule = service.getWeeklySchedule();  
+    return ResponseEntity.ok(schedule);  
+}
+
+public List<CarService> getWeeklySchedule() {  
+    // Логіка для отримання даних та групування по днях тижня  
+    List<CarService> allServices = repository.findAll();   
+    // Групування за датами і днями тижня тут  
+    // Процес групування може включати агрегування даних по датах  
+    return allServices; // Повернення агрегованих даних  
+}
+
+@GetMapping("/schedule")  
+public ResponseEntity<List<CarService>> getWeeklySchedule() {  
+    List<CarService> schedule = service.getWeeklySchedule();  
+    return ResponseEntity.ok(schedule);  
+}
